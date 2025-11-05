@@ -1,5 +1,6 @@
 import { PieChart, Cell,Pie, XAxis, YAxis, Tooltip, Legend,BarChart,CartesianGrid,Bar} from "recharts";
 import {decode} from "html-entities"
+import React from "react";
 type ChartData={
     name:string,
     value:number
@@ -15,7 +16,7 @@ interface ChartProps{
 "#99f6dfff", "#00CCCC", "#81e0ffff", "#bee0ffff", "#8fa6eeff", "#bea9ffff", "#c285ffff"
 ]
 
-export default function Charts({data,chartType}:ChartProps){
+ function Charts({data,chartType}:ChartProps){
   return (
   <div>
       {chartType === 'pie' && (
@@ -98,3 +99,5 @@ export default function Charts({data,chartType}:ChartProps){
       </div>
   );
 }
+
+export default React.memo(Charts);

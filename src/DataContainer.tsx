@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Charts from "./Charts";
 import { decode } from "html-entities"
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -30,11 +30,13 @@ export default function DataContainer() {
         fetchData();
 
     }, [])
-    const filteredData = data.filter(question => {
+    const filteredData = useMemo(()=>{
+        return data.filter(question => {
         const category = selectedCategory ? question.category == selectedCategory : true;
         const difficulty = selectedDifficulty ? question.difficulty == selectedDifficulty : true;
         return category && difficulty;
-    }) //matchmaker za select
+        });
+    },[data,selectedCategory,selectedDifficulty]) //matchmaker za select
     const categories = Array.from(new Set(data.map(item => item.category))); //za dinamicki dropdown
     const categoryCounts = filteredData.reduce((acc, item) => {
         acc[decode(item.category)] = (acc[item.category] || 0) + 1;
